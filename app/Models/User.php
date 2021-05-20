@@ -17,11 +17,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'matricule',
+        'telephone',
+        'nom',
+        'prenom',
         'email',
         'password',
+        'service',
+        'premiereConnexion',
     ];
 
+    public function adhesion(){
+        return $this->hasOne(Adhesion::class);
+    }
+
+    public function cotisations(){
+        return $this->hasMany(Cotisation::class);
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

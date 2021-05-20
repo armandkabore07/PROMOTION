@@ -10,12 +10,33 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/listemembres', [RegisteredUserController::class, 'index'])
+                //->middleware('auth')
+                ->name('listemembres');
+
+Route::get('/detailmembre', [RegisteredUserController::class, 'show'])
+                //->middleware('auth')
+                ->name('detailmembre');
+
+Route::get('/editmembre', [RegisteredUserController::class, 'edit'])
+                //->middleware('auth')
+                ->name('editmembre');
+
+Route::patch('/updatemembre', [RegisteredUserController::class, 'update'])
+                //->middleware('auth')
+                ->name('updatemembre');
+
+Route::delete('/deletemembre', [RegisteredUserController::class, 'destroy'])
+                //->middleware('auth')
+                ->name('deletemembre');
+
+
 Route::get('/register', [RegisteredUserController::class, 'create'])
-                ->middleware('guest')
+               // ->middleware('guest')
                 ->name('register');
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->middleware('guest');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+                //->middleware('guest');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')

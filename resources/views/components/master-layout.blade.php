@@ -18,10 +18,23 @@
     <div class="navbar">
         <a class="active" class="fa fa-fw fa-calendar-alt"></i> {{ date('d/m/y')  }} <br> {{ date('G:i') }}</a>
         <a  href="#"><i class="fa fa-fw fa-home"></i> Acceuil</a>
-        <a href="#"><i class="fa fa-fw fa-envelope"></i> Contact</a>
-        <a href="#"><i class="fa fa-fw fa-user"></i> Connexion</a>
-        <a href="#"><i class="fa fa-fw fa-user-plus"></i> Inscription</a>
+        <a href="{{route('listemembres') }}"><i class="fa fa-fw fa-user"></i> Membres</a>
+        <a href="#"><i class="fa fa-fw fa-user"></i> Adhesions</a>
+        <a href="#"><i class="fa fa-fw fa-envelope"></i> Cotisations</a>
+        <a href="#"><i class="fa fa-fw fa-user-plus"></i> Contact</a>
         <a href="#"><i class="fa fa-fw fa-search"></i> Recherche</a>
+        <a href="#">
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <x-responsive-nav-link :href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                                <i class="fa fa-fw fa-sign-out"></i>
+                {{ __('Deconnexion') }}
+            </x-responsive-nav-link>
+        </form>
+        
+        </a>
       </div>
 
     <main>

@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Information extends Model
+class Parametre extends Model
 {
-    protected $fillable = [
-        'libelle',
-        'dateInfo',
-        'commentaire',
-    ];
-    
     use HasFactory;
+    protected $fillable = [
+        'id','montantAdhesion','montantCotisation'
+    ];
 }
