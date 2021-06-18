@@ -11,12 +11,21 @@
                 
                 <div class="container-fluid">
                     <div class="row titre">
-                        <h3>Détail d'un membre   </h3>  
+                        <h3>Mon profil  </h3>  
                     </div>
+                    <br>
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <p>{{ $message }} </p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                    @endif
                    
                 <br>
                     <div class="row">
-                        <a href="{{route('membres.index')}} " class="btn btn-warning"><i class="fa fa-angle-left"></i>    Retour</a>   
+                        <a href="{{route('moncompte.edit',$member->id)}} " class="btn btn-warning"><i class="fa fa-pencil"></i>    Modifier</a>   
                     </div> 
                     <br>
                     
@@ -90,11 +99,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                        <a href="{{route('membres.index')}} " class="btn btn-warning"><i class="fa fa-lock"></i>   Reinitialiser le mot de passe <br> 12345678 </a>
-                          </div>
-                      </div>
+                        
                 
                             </div>
                         

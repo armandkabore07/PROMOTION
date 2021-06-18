@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
         
         //A rechercher un code pour executer automatiquement le seed et les migrations
         //Commentez les deux lignes ci-dessous avant de lancer php artisan serve et php artisan db:seed
-       $parametre = Parametre::findOrFail(1);
-       Config::set(['param' => ['montantAdhesion' =>  $parametre->montantAdhesion, 'montantCotisation'=> $parametre->montantCotisation]]);
+        $parametre = Parametre::findOrFail(1);
+        Config::set(['param' => ['montantAdhesion' =>  $parametre->montantAdhesion, 'montantCotisation'=> $parametre->montantCotisation]]);
 
     }
 }

@@ -13,6 +13,8 @@ class CreateCotisationsTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
+
         Schema::create('cotisations', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('userId');

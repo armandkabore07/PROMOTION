@@ -54,12 +54,14 @@ body {
   }
 
 
-   /* Style the navigation bar */
+   /* Style the navigation bar  */
 .navbar {
     width: 100%;
-    background-color: #555;
-    overflow: auto;
+   /* background-color: #555;*/
+    background-color: #22427c ;
+   /* overflow: auto;*/
   }
+  
   
   /* Navbar links */
   .navbar a {
@@ -69,17 +71,23 @@ body {
     color: white;
     text-decoration: none;
     font-size: 17px;
+  } 
+  #dropdown a{
+    color: black;
+    text-align: left;
   }
-  
-  /* Navbar links on mouse-over */
+  /* Navbar links on mouse-over 
   .navbar a:hover {
     background-color: #000;
-  }
+  }*/
   
   /* Current/active navbar link */
-  .active {
-    background-color: #04AA6D;
-  }
+  
+  /* .active {
+   background-color: #04AA6D; 
+   color: white;
+  }*/
+  
   
   /* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
   @media screen and (max-width: 500px) {
@@ -92,4 +100,102 @@ body {
 
   .image {
     background-image: url("images/promo3.jpg");
+}
+
+.date{
+  color: white;
+}
+
+.footer{
+  background-color: #22427c;
+}
+
+
+/*Style des cards du dashbord*/
+
+.card-box {
+    position: relative;
+    color: #fff;
+    padding: 20px 10px 40px;
+    margin: 20px 0px;
+}
+.card-box:hover {
+    text-decoration: none;
+    color: #f1f1f1;
+}
+.card-box:hover .icon i {
+    font-size: 100px;
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+.card-box .inner {
+    padding: 5px 10px 0 10px;
+}
+.card-box h3 {
+    font-size: 27px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    white-space: nowrap;
+    padding: 0;
+    text-align: left;
+}
+.card-box p {
+    font-size: 15px;
+}
+.card-box .icon {
+    position: absolute;
+    top: auto;
+    bottom: 5px;
+    right: 5px;
+    z-index: 0;
+    font-size: 72px;
+    color: rgba(0, 0, 0, 0.15);
+}
+.card-box .card-box-footer {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    text-align: center;
+    padding: 3px 0;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-decoration: none;
+}
+.card-box:hover .card-box-footer {
+    background: rgba(0, 0, 0, 0.3);
+}
+.bg-blue {
+    background-color: #00c0ef !important;
+}
+.bg-green {
+    background-color: #00a65a !important;
+}
+.bg-orange {
+    background-color: #f39c12 !important;
+}
+.bg-red {
+    background-color: #d9534f !important;
+}
+
+
+.titre{
+  color: #d9534f;
+  font-weight:bolder;
+  background-color: silver;
+  /*
+  width:900px;
+  height:40px;
+  /*box-shadow:5px 5px grey; */
+  box-shadow:5px 5px grey;
+  
+}
+
+.active {
+  background-color: #666;
+ /* color: white;*/
+}
+
+.dropdown-item{
+  /*background-color: #22427c;*/
 }

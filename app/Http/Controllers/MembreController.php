@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Adhesion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class AdhesionController extends Controller
+class MembreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,15 +14,6 @@ class AdhesionController extends Controller
     public function index()
     {
         //
-        $members = DB::table('users')
-                        ->join('adhesions','users.id','=','adhesions.userID')
-                        ->select('users.*', 'adhesions.id as idAdhesion','adhesions.montantAdhesion')
-                        ->orderBy('users.created_at', 'DESC')
-                        ->paginate(5)
-                       ;
-
-        //return dd($members);
-        return view('adhesions.listeAdhesions',compact('members'))->with('i',(request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -51,10 +40,10 @@ class AdhesionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Adhesion  $adhesion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Adhesion $adhesion)
+    public function show($id)
     {
         //
     }
@@ -62,10 +51,10 @@ class AdhesionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Adhesion  $adhesion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Adhesion $adhesion)
+    public function edit($id)
     {
         //
     }
@@ -74,10 +63,10 @@ class AdhesionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Adhesion  $adhesion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Adhesion $adhesion)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -85,10 +74,10 @@ class AdhesionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Adhesion  $adhesion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Adhesion $adhesion)
+    public function destroy($id)
     {
         //
     }

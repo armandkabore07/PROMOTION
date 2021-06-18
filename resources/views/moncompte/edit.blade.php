@@ -9,11 +9,11 @@
                 
                 
                     <div class="row titre">
-                        <h3>Modification d'un membre</h3>
+                        <h3>Modification de mes informations</h3>
                     </div>
                     <br>
                     <div class="row">
-                        <a href="{{ route('membres.index') }} " class="btn btn-warning"><i class="fa fa-angle-left"></i>     Retour</a>
+                        <a href="{{route('moncompte.show',$member->id)}} " class="btn btn-warning"><i class="fa fa-angle-left"></i> Retour</a>
                     </div>
                    
 
@@ -32,7 +32,7 @@
                     @endif
                   
                     
-                    <form action="{{  route('membres.update',$member->id)}} " method="POST" style="">
+                    <form action="{{  route('moncompte.update',$member->id)}} " method="POST" style="">
                         @method('PATCH')
                         @csrf
                         <div class="row">

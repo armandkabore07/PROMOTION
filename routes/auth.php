@@ -10,33 +10,34 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/listemembres', [RegisteredUserController::class, 'index'])
-                //->middleware('auth')
-                ->name('listemembres');
+Route::get('/membres', [RegisteredUserController::class, 'index'])
+                ->middleware('auth')
+                ->name('membres.index');
 
-Route::get('/detailmembre', [RegisteredUserController::class, 'show'])
-                //->middleware('auth')
-                ->name('detailmembre');
 
-Route::get('/editmembre', [RegisteredUserController::class, 'edit'])
-                //->middleware('auth')
-                ->name('editmembre');
+Route::get('/membres/{id}', [RegisteredUserController::class, 'show'])
+                ->middleware('auth')
+                ->name('membres.show');
 
-Route::patch('/updatemembre', [RegisteredUserController::class, 'update'])
-                //->middleware('auth')
-                ->name('updatemembre');
+Route::get('/membres/{id}/edit', [RegisteredUserController::class, 'edit'])
+                ->middleware('auth')
+                ->name('membres.edit');
 
-Route::delete('/deletemembre', [RegisteredUserController::class, 'destroy'])
-                //->middleware('auth')
-                ->name('deletemembre');
+Route::match(['put','patch'],'/membres/{id}', [RegisteredUserController::class, 'update'])
+               ->middleware('auth')
+               ->name('membres.update');
 
+Route::delete('/membres/{id}', [RegisteredUserController::class, 'destroy'])
+                 ->middleware('auth')
+                 ->name('membres.destroy');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
-               // ->middleware('guest')
-                ->name('register');
+              // ->middleware('auth')
+               ->name('creerMembres');
 
-Route::post('/register', [RegisteredUserController::class, 'store']);
-                //->middleware('guest');
+Route::post('/membres', [RegisteredUserController::class, 'store'])
+                //->middleware('auth')
+                ->name('membres.store');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')

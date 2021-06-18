@@ -8,8 +8,7 @@
             
                 <div class="">
                     <div class="row titre">
-                        <h3>Liste des membres</h3>
-                        
+                        <h3>Liste des cotisations</h3>
                     </div>
                     <br>
                     @if ($message = Session::get('success'))
@@ -20,15 +19,14 @@
                             </button>
                           </div>
                     @endif
-                    
+            {{--        <br>
                     <div class="row">
                         <a href="{{ route('creerMembres') }} " class="btn btn-success"><i class="fa fa-user-plus"></i> Creer un nouveau membre</a>
             
-                    </div>
+                    </div> --}}
                      
                     <br>
                   
-                    {{"Mot de passe du nouveau user : ".$mdp}}
                     <div class="row">
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
@@ -40,7 +38,8 @@
                                     <th scope="col">Email</th>
                                     <th scope="col">Telephone</th>
                                     <th scope="col">Service</th>
-                                   {{--  <th scope="col">Date d'adhésion</th>--}}
+                                    <th scope="col">Cotisation Totale</th>
+                                    {{--  <th scope="col">Date d'adhésion</th>--}}
                                 {{--   <th scope="col">Solde initial</th> --}} 
                                     <th scope="col">Actions</th>
                                 </tr>
@@ -55,15 +54,16 @@
                                         <td>{{ $member->email }}</td>
                                         <td>{{ $member->telephone }}</td>
                                         <td>{{ $member->service }}</td>
-                                        {{-- <td>{{date('d-m-Y', strtotime( $member->created_at))}}</td>--}}
+                                        <td><strong> {{ $member->total_cotisations }} FCFA</strong></td>
+                                       {{--   <td>{{date('d-m-Y', strtotime( $member->created_at))}}</td>--}}
                                        {{--  <td>{{ $member->soldeInitial }}</td>  --}}
                                         <td>
-                                            <form class="delete"  action="{{ route('membres.destroy', $member->id) }}" method="POST">
+                                            <form class="delete"  action="" method="POST">
                                                 @csrf
-                                                 <a  href="{{ route('membres.show', $member->id) }} " class="btn btn-info"><i class="fa fa-eye"></i> Detail</a> 
-                                                 <a href="{{ route('membres.edit', $member->id) }} " class="btn btn-warning"><i class="fa fa-edit"> </i> Modifier</a> 
+                                                 <a  href="{{route('cotisations.show',$member->id)}} " class="btn btn-info"><i class="fa fa-eye"></i> Detail</a> 
+                                                 <a href="{{route('cotisations.create',$member->id)}} " class="btn btn-warning"><i class="fa fa-money"> </i> Ajouter une cotisation</a>  
                                                 @method('DELETE')
-                                                <button onclick="return confirm('Voulez vous vraiment supprimer ce membre?')" class="btn btn-danger"><i class="fa fa-trash"></i>Supprimer</button>
+                                               {{--    <button onclick="return confirm('Voulez vous vraiment supprimer ce membre?')" class="btn btn-danger"><i class="fa fa-trash"></i>Supprimer</button>--}}
                                             </form>
                                         </td>
                                     </tr>

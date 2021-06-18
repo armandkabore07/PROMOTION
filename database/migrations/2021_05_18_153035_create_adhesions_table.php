@@ -13,6 +13,8 @@ class CreateAdhesionsTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
+        
         Schema::create('adhesions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('userId');

@@ -13,16 +13,35 @@ use App\Models\Adhesion;
 use App\Models\Cotisation;
 use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
+
+    /***********************************/
+    /* Génère un mot de passe */
+    /***********************************/
+    // $size : longueur du mot passe voulue
+    public function Genere_Password($size)
+    {
+    // Initialisation des caractères utilisables
+    $characters = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+    "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z","@","!","?","#");
+    $password = "";
+
+    for($i=0;$i<$size;$i++) { $password .=($i%2) ? strtoupper($characters[array_rand($characters)]) :$characters[array_rand($characters)]; } 
+        return $password; 
+    }
+
+
 
     public function index()
     {
         //
         $members = User::latest()->paginate(5);
-      // return view('members.listmembers', compact('members','montantadhesion','montantcotisation'))->with('i',(request()->input('page', 1) - 1) * 5);
-       return view('membres.listeMembres',compact('members'))->with('i',(request()->input('page', 1) - 1) * 5);
+        $mdp = self::Genere_Password(8);
+       // return view('members.listmembers', compact('members','montantadhesion','montantcotisation'))->with('i',(request()->input('page', 1) - 1) * 5);
+       return view('membres.listeMembres',compact('members','mdp'))->with('i',(request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -32,8 +51,8 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        //return view('auth.register');
-        return view('membres.create');
+      //return view('auth.register');
+      return view('membres.create');
     }
 
     /**
@@ -42,24 +61,29 @@ class RegisteredUserController extends Controller
      * @param  \App\Models\User  $member
      * @return \Illuminate\Http\Response
      */
-    public function show(User $member)
+    public function show($id)
     {
-        //
-        return view('members.show',compact('member'));
+       $member = User::findorfail($id);
+       return view('membres.show',compact('member'));
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $member
-     * @return \Illuminate\Http\Response
+     *
      */
-    public function edit(Member $member)
+    public function edit($id)
     {
-        //
-        return view('members.edit',compact('member'));
+       
+        $member = User::findorfail($id);
+        return view('membres.edit',compact('member'));
+        //return $member;
        
     }
+
+
+    
 
     /**
      * Handle an incoming registration request.
@@ -71,16 +95,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        $mdp = self::Genere_Password(8);
+        $montant = $request->montant;
+        $montantadhesion = Config::get('param.montantAdhesion');
+        $montantcotisation = Config::get('param.montantCotisation');
+        $date = Carbon::now()->format('Y');
+        $todayDate = Carbon::now()->format('Y-m-d');
+
         $request->validate([
-            'telephone' => 'required|min:8',
-            'matricule' => 'required|string|max:255',
+            'telephone' => 'required|integer|min:8|unique:users',
+            'matricule' => 'required|string|max:255|unique:users',
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'service' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
            // 'password' => 'required|string|confirmed|min:8',
-            'montant' => 'required|integer',
+            'montant' => 'required|integer|gte:'.$montantadhesion.'',
         ]);
+
+        
+     if($montant>=$montantadhesion) {
+        $mailuser = $request->email;
 
         $user = User::create([
             'telephone' => $request->telephone,
@@ -89,16 +124,15 @@ class RegisteredUserController extends Controller
             'prenom' => $request->prenom,
             'service' => $request->service,
             'email' => $request->email,
+            'soldeInitial'  => $request->montant,
             //'password' => Hash::make($request->password),
-            'password' => Hash::make('12345678'),
+            //'password' => Hash::make('12345678'),
+            'password' => Hash::make($mdp),
+           // 'password' => Hash::make($mdp),
         ]);
-
+    
         $userId =  $user->id; 
-        $montant = $request->montant;
-        $montantadhesion = Config::get('param.montantAdhesion');
-        $montantcotisation = Config::get('param.montantCotisation');
-        $date = Carbon::now()->format('Y');
-        $todayDate = Carbon::now()->format('Y-m-d');
+        
         
         Adhesion::create([
             'userId' => $userId,
@@ -117,7 +151,7 @@ class RegisteredUserController extends Controller
                 'dateCotisation'=> $todayDate,
             ]);
            
-        }else {
+         }elseif($montantACotiser>0 && $montantACotiser>=$montantcotisation) {
            
             while ($montantACotiser >= $montantcotisation) {
                 Cotisation::create([
@@ -145,13 +179,21 @@ class RegisteredUserController extends Controller
     
         }
 
-        
         //event(new Registered($user));
-
         //Auth::login($user);
-
         //return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('listemembres')->with('success','Membre crée avec succès!');
+        //Envoi de mail
+        $details = [
+            'title' => 'Mail from promotion@support.com',
+            'body' => 'Cher '.$request->nom.', Votre compte a été créé avec succès veuillez vous connecter avec le lien suivant  http://localhost  votre mot de passe est: '.$mdp
+        ];
+    
+        Mail::to( $mailuser)->send(new \App\Mail\MailCreation($details));
+
+        return redirect()->route('membres.index')->with('success','Membre crée avec succès!');
+            
+ }
+
     }
 
       /**
@@ -161,12 +203,36 @@ class RegisteredUserController extends Controller
      * @param  \App\Models\User  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $member)
+    public function update(Request $request,  $id)
     {
        
+        $request->validate([
+            //'telephone' => 'required|min:8',
+            //'matricule' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'service' => 'required|string|max:255',
+           // 'email' => 'required|string|email|max:255|unique:users',
+           // 'password' => 'required|string|confirmed|min:8',
+            //'montant' => 'required|integer',
+        ]);
 
-        //return redirect()->route('members.index')->with('success','membre modifié avec succès!');
-        return "bonjour";
+        $member= User::findorfail($id);
+
+        // $member->telephone = $request->telephone;
+        // $member->matricule= $request->matricule;
+        // $member->email = $request->email;
+        // $member->nom = $request->nom;
+        // $member->prenom = $request->prenom;
+        // $member->service = $request->service;
+        // $member->save();
+
+        $member->update($request->all());
+       //$member->assignRole('user');
+       // $member->assignRole('admin');
+
+        return redirect()->route('membres.index')->with('success','membre modifié avec succès!');
+       
     }
 
     /**
@@ -175,12 +241,14 @@ class RegisteredUserController extends Controller
      * @param  \App\Models\User  $member
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $member)
+    public function destroy($id)
     {
-        
-      //  $member->delete();
-      //  return redirect()->route('members.index')->with('success','membre supprimé avec succèss!');
-      return "delete";
+       Adhesion::where('userId',$id)->delete();
+       Cotisation::where('userId',$id)->delete();
+       $member= User::findorfail($id);
+       $member->delete();
+       return redirect()->route('membres.index')->with('success','membre supprimé avec succèss!');
+     
     }
 
 }

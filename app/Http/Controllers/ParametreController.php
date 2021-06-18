@@ -15,6 +15,9 @@ class ParametreController extends Controller
     public function index()
     {
         //
+        $params = Parametre::findorfail(1);
+        //return dd($params->id);
+        return view('parametres.listeParametres',compact('params'));
     }
 
     /**
@@ -25,6 +28,7 @@ class ParametreController extends Controller
     public function create()
     {
         //
+       
     }
 
     /**
@@ -44,9 +48,10 @@ class ParametreController extends Controller
      * @param  \App\Models\Parametre  $parametre
      * @return \Illuminate\Http\Response
      */
-    public function show(Parametre $parametre)
+    public function show( $id)
     {
-        //
+        $param = Parametre::findorfail($id);
+        return view('parametres.show',compact('param'));
     }
 
     /**
@@ -55,9 +60,10 @@ class ParametreController extends Controller
      * @param  \App\Models\Parametre  $parametre
      * @return \Illuminate\Http\Response
      */
-    public function edit(Parametre $parametre)
+    public function edit($id)
     {
-        //
+        $param = Parametre::findorfail($id);
+        return view('parametres.edit',compact('param'));
     }
 
     /**
@@ -67,9 +73,19 @@ class ParametreController extends Controller
      * @param  \App\Models\Parametre  $parametre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parametre $parametre)
+    public function update(Request $request, $id)
     {
         //
+        $request->validate([
+        
+            'montantAdhesion' => 'required|integer',
+            'montantCotisation' => 'required|integer',
+        ]);
+
+        $param = Parametre::findorfail($id);
+        $param->update($request->all());
+
+        return redirect()->route('parametres.index')->with('success','Parametres modifiés avec succès!');
     }
 
     /**

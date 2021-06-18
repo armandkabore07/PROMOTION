@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             'montantAdhesion' => 1000,
             'montantCotisation' => 6000,
         ]);
+
+        
         
     }
 }
