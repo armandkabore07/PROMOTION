@@ -31,12 +31,16 @@ Route::delete('/membres/{id}', [RegisteredUserController::class, 'destroy'])
                  ->middleware('auth')
                  ->name('membres.destroy');
 
+Route::get('/reinitialisation/{id}', [RegisteredUserController::class, 'reinitialisation'])
+                 ->middleware('auth')
+                 ->name('membres.reinitialisation');
+
 Route::get('/register', [RegisteredUserController::class, 'create'])
-              // ->middleware('auth')
+               ->middleware('auth')
                ->name('creerMembres');
 
 Route::post('/membres', [RegisteredUserController::class, 'store'])
-                //->middleware('auth')
+                ->middleware('auth')
                 ->name('membres.store');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])

@@ -1,9 +1,9 @@
 <x-master-layout>
-    <div  style="height:85vh; background-color: white; background-size: cover; background-image: url('images/promo3.jpg'); " >
+    <div  style=" background-color: white; background-size: cover; " class="overflow-auto">
 <br>
 
          <!-- Card -->
-         <div class="card mx-xl-5 overflow-auto shadow-lg p-3 mb-5 bg-white rounded"  style="height:80vh;">
+         <div class="card mx-xl-5  shadow-lg p-3 mb-5 bg-white rounded"  >
             <!-- Card body -->
             <div class="card-body">
                 
@@ -40,14 +40,14 @@
                                 <div class="form-group">
                                     <strong>Telephone:</strong>
                                     <input type="number" name="telephone" value="{{ old('telephone') ? old('telephone') : $member->telephone }}"
-                                        class="form-control" placeholder="Telephone" disabled="disabled">
+                                        class="form-control" placeholder="Telephone" >
                                 </div>
                             </div>
                             <div class="col-xs-7 col-sm-7 col-md-7">
                                 <div class="form-group">
                                     <strong>Matricule:</strong>
                                     <input type="text" name="matricule" value="{{ old('matricule') ? old('matricule') : $member->matricule }}"
-                                        class="form-control" placeholder="Matricule" disabled="disabled">
+                                        class="form-control" placeholder="Matricule" >
                                 </div>
                             </div>
                             <div class="col-xs-7 col-sm-7 col-md-7">
@@ -70,7 +70,7 @@
                                 <div class="form-group">
                                     <strong>Email:</strong>
                                     <input type="email" name="email" value="{{ old('email') ? old('email') : $member->email }}" class="form-control"
-                                        placeholder="name@example.com" disabled="disabled">
+                                        placeholder="name@example.com" >
                                 </div>
                             </div>
                             <div class="col-xs-7 col-sm-7 col-md-7">
@@ -80,6 +80,23 @@
                                         class="form-control" placeholder="Service">
                                 </div>
                             </div>
+
+                            <div class="col-xs-7 col-sm-7 col-md-7">
+                                <div class="form-group">
+                                    <strong>Role:</strong>
+                                     <select class="form-control" name="role">
+                                             <option value="">Aucun</option>
+                                             @foreach($roles as $role) 
+                                                     <!--      <option value="{{$role->name}}" {{ ($role->name == $userrole->name ) ? 'selected' : '' }}> -->
+                                                     <option value="{{$role->name}}" @if ( old('role') == $role->name ||  $role->name == $userrole->name ) selected @endif>
+                                                  {{$role->name}}
+                                                </option>
+                                             @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+ 
 {{--
                             <div class="col-xs-7 col-sm-7 col-md-7">
                                 <div class="form-group">
@@ -88,6 +105,7 @@
                                         class="form-control" placeholder="montant" disabled="disabled">
                                 </div>
                             </div>
+
   --}}         
             
                         </div>

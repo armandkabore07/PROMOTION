@@ -110,6 +110,13 @@ body {
   background-color: #22427c;
 }
 
+#contentbody{
+  margin-top: 6.5rem;
+}
+
+#menu{
+  margin-bottom: 10.5rem;
+}
 
 /*Style des cards du dashbord*/
 

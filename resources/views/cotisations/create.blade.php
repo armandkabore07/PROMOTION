@@ -1,9 +1,9 @@
 <x-master-layout>
-    <div  style="height:85vh; background-color: sylver; background-size: cover; background-image: url('images/promo.jpg'); " >
+    <div  style="background-color: sylver; background-size: cover;  " class="overflow-auto">
 <br>
 
          <!-- Card -->
-         <div class="card mx-xl-5 overflow-auto  shadow-lg p-3 mb-5 bg-white rounded"  style="height:80vh;">
+         <div class="card mx-xl-5  shadow-lg p-3 mb-5 bg-white rounded" >
             <!-- Card body -->
             <div class="card-body">
                 
@@ -11,10 +11,11 @@
                     <div class="row titre">
                         <h3>Enregistrement d'une cotisation</h3>
                     </div>
-                    <br>
+                    <br><br>
                     <div class="row">
                         <a href="{{ route('cotisations.index') }} " class="btn btn-success"><i class="fa fa-angle-left"></i>  Retour</a>
                     </div>
+                    <br>
                    
          {{--          @if ($errors->any())
                         <br>
@@ -75,6 +76,7 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Enregistrer</button>
                     </form>
              

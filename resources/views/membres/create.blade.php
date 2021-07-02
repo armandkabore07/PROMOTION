@@ -107,6 +107,23 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="col-xs-7 col-sm-7 col-md-7">
+                                <div class="form-group">
+                                    <strong>Role:</strong>
+                                     <select class="form-control" name="role">
+                                             <option value="">Aucun</option>
+                                             @foreach($roles as $role) 
+                                                     <option value="{{$role->name}}" >
+                                                    {{$role->name}}
+                                                </option>
+                                             @endforeach
+                                    </select>
+                                    @if ($errors->any('role'))
+                                        <span class="text-danger" >{{$errors->first('role') }} </span>
+                                    @endif
+                                </div>
+                            </div>
             
                         </div>
             

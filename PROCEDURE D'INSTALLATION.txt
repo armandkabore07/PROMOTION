@@ -1,0 +1,31 @@
+********************************************************************************************************************************************
+*                                                    PROCEDURE D'INSTALLATION                                                              *
+********************************************************************************************************************************************
+
+1- Renseigez les informations de la base de données  ainsi que le mail qui sera utiliser pour l'envoi des mails  dans le fichier .env
+
+
+2- Dans App > Providers > AppServiceProvider.php
+
+	Dans la fonction boot() commentez les deux lignes suivantes:
+	//$parametre = Parametre::findOrFail(1);
+        // Config::set(['param' => ['montantAdhesion' =>  $parametre->montantAdhesion, 'montantCotisation'=> $parametre->montantCotisation]]);
+
+3- Executez ces deux commandes:
+	php artisan migrate
+	php artisan db:seed
+
+4- Décommentez Ensuite les deux lignes dans App > Providers > AppServiceProvider.php
+	
+	Dans la fonction boot() commentez les deux lignes suivantes:
+	$parametre = Parametre::findOrFail(1);
+        Config::set(['param' => ['montantAdhesion' =>  $parametre->montantAdhesion, 'montantCotisation'=> $parametre->montantCotisation]]);
+
+5- Executez la commande suivante afin de pouvoir lancer l'application:
+	php artisan serve
+
+6- Connectez vous avec les identifiants par défaut et modifier les informations de l'administrateur:
+	user:11111111
+	mot de passe:11111111
+
+

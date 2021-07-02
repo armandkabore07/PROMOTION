@@ -27,11 +27,11 @@ class CotisationController extends Controller
                         ->select('users.*', DB::raw('SUM(cotisations.montantPayer) as total_cotisations'))
                         ->groupBy('users.id')
                         ->orderBy('users.created_at', 'DESC')
-                        ->paginate(5)
+                        ->paginate(8)
                        ;
                 //return dd($members);
         //$members = User::latest()->paginate(5);
-       return view('cotisations.listeCotisation',compact('members'))->with('i',(request()->input('page', 1) - 1) * 5);
+       return view('cotisations.listeCotisation',compact('members'))->with('i',(request()->input('page', 1) - 1) * 8);
     }
 
     /**
@@ -61,7 +61,7 @@ class CotisationController extends Controller
            // 'matricule' => 'required|string|max:255|unique:users',
            // 'nom' => 'required|string|max:255',
            // 'prenom' => 'required|string|max:255',
-            'montant' => 'required|integer',
+            'montant' => 'required|integer|gt:0',
         ]);
 
         $derniercoti = Cotisation::where('userId','=',$id)->orderBy('annee','desc')->first();

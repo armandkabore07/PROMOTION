@@ -38,10 +38,10 @@ class RegisteredUserController extends Controller
     public function index()
     {
         //
-        $members = User::latest()->paginate(5);
+        $members = User::latest()->paginate(8);
         $mdp = self::Genere_Password(8);
        // return view('members.listmembers', compact('members','montantadhesion','montantcotisation'))->with('i',(request()->input('page', 1) - 1) * 5);
-       return view('membres.listeMembres',compact('members','mdp'))->with('i',(request()->input('page', 1) - 1) * 5);
+       return view('membres.listeMembres',compact('members','mdp'))->with('i',(request()->input('page', 1) - 1) * 8);
     }
 
     /**
@@ -51,8 +51,9 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
+        $roles = \Spatie\Permission\Models\Role::all();
       //return view('auth.register');
-      return view('membres.create');
+      return view('membres.create',compact('roles'));
     }
 
     /**
@@ -77,7 +78,9 @@ class RegisteredUserController extends Controller
     {
        
         $member = User::findorfail($id);
-        return view('membres.edit',compact('member'));
+        $roles = \Spatie\Permission\Models\Role::all();
+        $userrole =  $member->roles->first();
+        return view('membres.edit',compact('member','roles','userrole'));
         //return $member;
        
     }
@@ -109,6 +112,7 @@ class RegisteredUserController extends Controller
             'prenom' => 'required|string|max:255',
             'service' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'role' => 'required',
            // 'password' => 'required|string|confirmed|min:8',
             'montant' => 'required|integer|gte:'.$montantadhesion.'',
         ]);
@@ -132,6 +136,7 @@ class RegisteredUserController extends Controller
         ]);
     
         $userId =  $user->id; 
+        $user->assignRole($request->role);
         
         
         Adhesion::create([
@@ -142,7 +147,9 @@ class RegisteredUserController extends Controller
 
         $montantACotiser =  $montant - $montantadhesion;
 
-        if ($montantACotiser>0 && $montantACotiser< $montantcotisation) {
+       
+
+        if ($montantACotiser>=0 && $montantACotiser< $montantcotisation) {
             Cotisation::create([
                 'userId' => $userId,
                 'montantPayer'=>$montantACotiser,
@@ -185,7 +192,7 @@ class RegisteredUserController extends Controller
         //Envoi de mail
         $details = [
             'title' => 'Mail from promotion@support.com',
-            'body' => 'Cher '.$request->nom.', Votre compte a été créé avec succès veuillez vous connecter avec le lien suivant  http://localhost  votre mot de passe est: '.$mdp
+            'body' => 'Cher '.$request->nom.', Votre compte a été crée avec succès veuillez vous connecter avec le lien suivant  http://localhost  votre mot de passe est: '.$mdp
         ];
     
         Mail::to( $mailuser)->send(new \App\Mail\MailCreation($details));
@@ -207,12 +214,13 @@ class RegisteredUserController extends Controller
     {
        
         $request->validate([
-            //'telephone' => 'required|min:8',
-            //'matricule' => 'required|string|max:255',
+            'telephone' => 'required|min:8|unique:users,telephone,'.$id,
+            'matricule' => 'required|string|max:255|unique:users,matricule,'.$id,
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'service' => 'required|string|max:255',
-           // 'email' => 'required|string|email|max:255|unique:users',
+            'role' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
            // 'password' => 'required|string|confirmed|min:8',
             //'montant' => 'required|integer',
         ]);
@@ -226,9 +234,16 @@ class RegisteredUserController extends Controller
         // $member->prenom = $request->prenom;
         // $member->service = $request->service;
         // $member->save();
+        //if($member->telephone!=$request->telephone){ }
 
         $member->update($request->all());
-       //$member->assignRole('user');
+
+        if($member->roles->first()->name==$request->role){ }
+        else{ 
+            $member->removeRole($member->roles->first()->name);
+            $member->assignRole($request->role);
+        }
+       // $member->assignRole('user');
        // $member->assignRole('admin');
 
         return redirect()->route('membres.index')->with('success','membre modifié avec succès!');
@@ -249,6 +264,25 @@ class RegisteredUserController extends Controller
        $member->delete();
        return redirect()->route('membres.index')->with('success','membre supprimé avec succèss!');
      
+    }
+
+    public function reinitialisation($id)
+    {
+        $mdp = self::Genere_Password(8);
+        $member= User::findorfail($id);
+        $member->password  = Hash::make($mdp);
+        $member->save();
+
+        $details = [
+            'title' => 'Mail from promotion@support.com',
+            'body' => 'Cher '.$member->nom.', Votre mot de passe a été reinitialisé avec succès veuillez vous connecter avec le lien suivant  http://localhost  votre nouveau mot de passe est: '.$mdp
+        ];
+    
+        Mail::to($member->email)->send(new \App\Mail\MailCreation($details));
+
+        return redirect()->route('membres.show',$id)->with(
+            [ 'success' => 'Succèss de reinitialisation du mot de passe!',
+            'newmdp' => $mdp,]); 
     }
 
 }

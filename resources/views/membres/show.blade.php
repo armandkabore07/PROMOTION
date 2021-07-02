@@ -1,10 +1,10 @@
 
 <x-master-layout>
-    <div  style="height:85vh; background-color: white; background-size: cover; background-image: url('images/promo.jpg'); " >
+    <div  style=" background-color: white; background-size: cover; " class="overflow-auto">
 <br>
 
          <!-- Card -->
-         <div class="card mx-xl-5 overflow-auto shadow-lg p-3 mb-5 bg-white rounded "  style="height:80vh;">
+         <div class="card mx-xl-5  shadow-lg p-3 mb-5 bg-white rounded "  >
             <!-- Card body -->
             <div class="card-body">
                 
@@ -20,7 +20,16 @@
                     </div> 
                     <br>
                     
-                        
+                        @if($message= Session::get('success'))
+                         <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <p>{{ $message }} @if($newmdp=Session::get('newmdp')) Nouveau mot de passe: {{$newmdp}} @endif</p>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                        @endif
+
+                     
                     <div class="card" style="width: 80rem;"  class="shadow-lg p-3 mb-5 bg-white">
                         <div class="card-body">
                             <div class="row">
@@ -90,10 +99,21 @@
                                 @endif
                             </div>
                         </div>
+                        <!--
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
-                        <a href="{{route('membres.index')}} " class="btn btn-warning"><i class="fa fa-lock"></i>   Reinitialiser le mot de passe <br> 12345678 </a>
+                                <strong>Role2:</strong>
+                                @if(!empty($member->roles))
+                                <label class="badge badge-success">{{ $member->roles->first()->name }}</label>
+                                @endif
+                            </div>
+                        </div>  -->
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                        <a href="{{route('membres.reinitialisation',$member->id)}} " class="btn btn-warning"><i class="fa fa-lock"></i>   Reinitialiser le mot de passe <br> </a>
                           </div>
+                          <p>NB: Le nouveau mot de passe sera transmis par mail au membre</p>
                       </div>
                 
                             </div>

@@ -1,6 +1,6 @@
 <x-master-layout>
     <div
-        style=" background-color: white; background-size: cover;  " class="overflow-auto">
+        style=" background-color: white; background-size: cover; " class="overflow-auto" >
         <br>
         <!-- Card -->
         <div class="card mx-xl-5  shadow-lg p-3 mb-5 bg-white rounded" >
@@ -9,14 +9,10 @@
 
                 <div class="">
                     <div class="row titre">
-                        <h3>Détail des cotisations du membre</h3>
+                        <h3>Détail de mes cotisations </h3>
                     </div>
                     <br>
-                @role('admin')
-                 <div class="row ">
-                    <a href="{{route('cotisations.index')}} " class="btn btn-warning"><i class="fa fa-angle-left"></i>    Retour</a>
-                </div> 
-                 @endrole
+               
                  <br>
                   
                     <div class="container shadow-lg p-3 mb-5 bg-white rounded">

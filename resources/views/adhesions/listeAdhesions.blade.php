@@ -1,8 +1,8 @@
 <x-master-layout>
-    <div  style="height:85vh; background-color: white; background-size: cover; background-image: url('images/promo.jpg'); " >
+    <div  style=" background-color: white; background-size: cover;  " class="overflow-auto">
 <br>
          <!-- Card -->
-         <div class="card mx-xl-5 overflow-auto shadow-lg p-3 mb-5 bg-white rounded"  style="height:80vh;">
+         <div class="card mx-xl-5  shadow-lg p-3 mb-5 bg-white rounded" >
             <!-- Card body -->
             <div class="card-body">
             
@@ -14,7 +14,7 @@
                      
                     <br>
                   <br>
-                    <div class="row">
+                    <div class="row table-responsive">
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
                                 <tr>

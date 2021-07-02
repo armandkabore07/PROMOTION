@@ -46,14 +46,19 @@
                                 <div class="form-group">
                                     <strong>Nouveau mot de passe:</strong>
                                     <input type="password" name="password" value=""
-                                        class="form-control" placeholder="Nouveau mot de passe" required autocomplete="new-password" />
+                                         placeholder="Nouveau mot de passe" class="form-control @error('password') is-invalid @enderror" required autocomplete="new-password" />
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                 </div>
                             </div>
                             <div class="col-xs-7 col-sm-7 col-md-7">
                                 <div class="form-group">
                                     <strong>Confirmer le mot de passe:</strong>
                                     <input type="password" name="password_confirmation" value=""
-                                        class="form-control" placeholder="Confirmation du mot de passe"  required />
+                                        class="form-control @error('password') is-invalid @enderror" placeholder="Confirmation du mot de passe"  required />
                                 </div>
                             </div>
               

@@ -6,6 +6,8 @@ use App\Http\Controllers\CotisationController;
 use App\Http\Controllers\AdhesionController;
 use App\Http\Controllers\ParametreController;
 use App\Http\Controllers\MonCompteController;
+use App\Http\Controllers\InformationController;
+use App\Http\Controllers\MesCotisationsController;
 use Illuminate\Support\Facades\DB;
 
 
@@ -25,7 +27,9 @@ Route::get('/', function () {
     $montantAdhesion = DB::table('adhesions')->sum('montantAdhesion');
     $montantCotisation = DB::table('cotisations')->sum('montantPayer');
     $montantEncaisse = $montantAdhesion + $montantCotisation ;
-    return view('welcome',compact('nbtotalMembre','montantEncaisse'));
+    $montantDepense = DB::table('informations')->sum('montant_depense');
+    $montantRestant = $montantEncaisse - $montantDepense;
+    return view('welcome',compact('nbtotalMembre','montantEncaisse','montantDepense','montantRestant'));
 })->middleware(['auth'])->name('home');
 
 Route::get('/dashboard', function () {
@@ -34,11 +38,15 @@ Route::get('/dashboard', function () {
 
 //Route::resource('membres', MembreController::class);
 
-Route::resource('cotisations', CotisationController::class)->except(['create','store']);
+Route::resource('cotisations', CotisationController::class)->except(['create','store'])->middleware(['auth']);
 Route::get('/cotisations/create/{id}',[CotisationController::class, 'create'])->middleware(['auth'])->name('cotisations.create');
 Route::match(['post','put','patch'],'/cotisations/{id}', [CotisationController::class, 'store'])
               // ->middleware('auth')
                ->name('cotisations.store');
+
+Route::resource('informations', InformationController::class)->middleware(['auth']);
+
+Route::resource('mesCotisations', MesCotisationsController::class)->middleware(['auth']);
 
 Route::resource('adhesions', AdhesionController::class)->middleware(['auth']);
 Route::resource('parametres', ParametreController::class)->middleware(['auth']);

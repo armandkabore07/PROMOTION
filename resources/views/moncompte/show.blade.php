@@ -1,10 +1,13 @@
 
 <x-master-layout>
-    <div  style="height:85vh; background-color: white; background-size: cover; background-image: url('images/promo.jpg'); " >
+ <!--<div  style="height:85vh; background-color: white; background-size: cover; background-image: url('images/promo3.jpg'); " >-->
+ <div  style=" background-color: sylver; background-size: cover" class="overflow-auto" >
+ 
 <br>
 
          <!-- Card -->
-         <div class="card mx-xl-5 overflow-auto shadow-lg p-3 mb-5 bg-white rounded "  style="height:80vh;">
+         <div class="card mx-xl-5  shadow-lg p-3 mb-5 bg-white rounded" >
+        <!-- <div class="card mx-xl-5 overflow-auto shadow-lg p-3 mb-5 bg-white rounded "  style="height:80vh;">-->
             <!-- Card body -->
             <div class="card-body">
                 

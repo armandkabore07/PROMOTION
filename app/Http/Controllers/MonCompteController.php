@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class MonCompteController extends Controller
 {
@@ -105,6 +106,11 @@ class MonCompteController extends Controller
         $request->validate([
             'password' => 'required|string|confirmed|min:8',
         ]);
+
+        $member= User::findorfail($id);
+        $member->update(['password' => Hash::make($request->password)] );
+      
+        return redirect()->route('mdp.edit',$id)->with('success','Mot de passe modifié avec succès!');
 
     }
     /**

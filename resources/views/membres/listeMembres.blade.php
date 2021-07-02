@@ -1,8 +1,8 @@
 <x-master-layout>
-    <div  style="height:85vh; background-color: white; background-size: cover; background-image: url('images/promo.jpg'); " >
+    <div  style=" background-color: white; background-size: cover; " class="overflow-auto">
 <br>
          <!-- Card -->
-         <div class="card mx-xl-5 overflow-auto shadow-lg p-3 mb-5 bg-white rounded"  style="height:80vh;">
+         <div class="card mx-xl-5  shadow-lg p-3 mb-5 bg-white rounded" >
             <!-- Card body -->
             <div class="card-body">
             
@@ -28,9 +28,9 @@
                      
                     <br>
                   
-                    {{"Mot de passe du nouveau user : ".$mdp}}
-                    <div class="row">
-                        <table class="table table-bordered table-hover table-striped">
+                     <!--{{"Mot de passe du nouveau user : ".$mdp}}-->
+                    <div class="row table-responsive">
+                        <table class="table  table-bordered table-hover table-striped" style="width100%; overflow: scroll;">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -39,6 +39,7 @@
                                     <th scope="col">Prenom</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Telephone</th>
+                                    <th scope="col">Role</th>
                                     <th scope="col">Service</th>
                                    {{--  <th scope="col">Date d'adhésion</th>--}}
                                 {{--   <th scope="col">Solde initial</th> --}} 
@@ -54,6 +55,7 @@
                                         <td>{{ $member->prenom }}</td>
                                         <td>{{ $member->email }}</td>
                                         <td>{{ $member->telephone }}</td>
+                                        <td> <label class="badge badge-success">{{ $member->roles->first()->name }}</label></td>
                                         <td>{{ $member->service }}</td>
                                         {{-- <td>{{date('d-m-Y', strtotime( $member->created_at))}}</td>--}}
                                        {{--  <td>{{ $member->soldeInitial }}</td>  --}}

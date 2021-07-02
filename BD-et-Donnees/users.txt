@@ -1,0 +1,29 @@
+
+******************************************
+Le user du admin du fichier promotion_vide
+******************************************
+Name:Admin
+Telephone:11111111
+Mot de passe:11111111
+Profile:Admin
+
+******************************************
+
+
+
+
+
+
+**************************************
+Les users du fichier promotion02072021
+**************************************
+Name:Armand
+Telephone:63249692
+Mot de passe:12345678
+Profile:Admin
+
+Name:Ramzy
+Telephone:76658654
+Mot de passe:12345678
+Profile:User
+*************************************
