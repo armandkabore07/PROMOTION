@@ -41,6 +41,8 @@ body {
     padding: 0;
     margin: 0;
   }
+
+ 
   
   #myMenu li a {
     padding: 12px;
@@ -64,6 +66,16 @@ body {
   
   
   /* Navbar links */
+  .nav-item a {
+    float: left;
+    text-align: center;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+  } 
+
+  /* Navbar links */
   .navbar a {
     float: left;
     text-align: center;
@@ -72,6 +84,29 @@ body {
     text-decoration: none;
     font-size: 17px;
   } 
+
+   /* New */
+ #navbarText ul li a{
+    float: left;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+  } 
+
+  /* New */
+ #navbarText ul li a:hover{
+  background-color: silver;
+  color: #22427c ;
+} 
+
+/* New */
+#navbarText ul li #dropdown ul li a{
+    color: black;
+    text-align: left;
+  }
+
   #dropdown a{
     color: black;
     text-align: left;
@@ -111,7 +146,7 @@ body {
 }
 
 #contentbody{
-  margin-top: 6.5rem;
+  margin-top: 3.5rem;
 }
 
 #menu{

@@ -1,7 +1,7 @@
 <x-master-layout>
 
     
-    <section class="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark image table-responsive" style="height:100vh; background-size: cover; background-image: url('images/promo3.jpg');" >
+    <section class="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark image table-responsive overflow-auto" style="background-size: cover; background-image: url('images/promo3.jpg');" >
         <div class="container-fluid">
 
                 <div class="row">
@@ -9,7 +9,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card-box bg-red">
                             <div class="inner">
-                                <h3> {{$nbtotalMembre}} </h3>
+                                <h3> {{number_format($nbtotalMembre, 0, ',', '.')}} </h3>
                                 <p><strong> Nombre Total Des Membres </strong> </p>
                             </div>
                             <div class="icon">
@@ -21,7 +21,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card-box bg-orange">
                             <div class="inner">
-                                <h3>  {{$montantEncaisse}} FCFA </h3>
+                                <h3>  {{number_format($montantEncaisse, 0, ',', '.')}} FCFA </h3>
                                 <p><strong> Montant Total Encaissé </strong></p>
                             </div>
                             <div class="icon">
@@ -33,7 +33,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card-box bg-blue">
                             <div class="inner">
-                                <h3> {{$montantDepense}}  FCFA</h3>
+                                <h3> {{number_format($montantDepense, 0, ',', '.')}}  FCFA</h3>
                                 <p> <strong>Montant Total Des Dépenses </strong></p>
                             </div>
                             <div class="icon">
@@ -46,7 +46,7 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="card-box bg-green">
                             <div class="inner">
-                                <h3> {{$montantRestant}} FCFA</h3>
+                                <h3> {{number_format($montantRestant, 0, ',', '.')}} FCFA</h3>
                                 <p> <strong>Reste</strong> </p>
                             </div>
                             <div class="icon">

@@ -192,7 +192,8 @@ class RegisteredUserController extends Controller
         //Envoi de mail
         $details = [
             'title' => 'Mail from promotion@support.com',
-            'body' => 'Cher '.$request->nom.', Votre compte a été crée avec succès veuillez vous connecter avec le lien suivant  http://localhost  votre mot de passe est: '.$mdp
+       //   'body' => 'Cher '.$request->nom.', Votre compte a été crée avec succès veuillez vous connecter avec le lien suivant  http://localhost  votre mot de passe est: '.$mdp
+            'body' => 'Cher '.$request->nom.', Votre compte a été crée avec succès veuillez vous connecter avec le lien suivant  http://www.cellule260.com/  votre mot de passe est: '.$mdp
         ];
     
         Mail::to( $mailuser)->send(new \App\Mail\MailCreation($details));
@@ -275,7 +276,7 @@ class RegisteredUserController extends Controller
 
         $details = [
             'title' => 'Mail from promotion@support.com',
-            'body' => 'Cher '.$member->nom.', Votre mot de passe a été reinitialisé avec succès veuillez vous connecter avec le lien suivant  http://localhost  votre nouveau mot de passe est: '.$mdp
+            'body' => 'Cher '.$member->nom.', Votre mot de passe a été reinitialisé avec succès veuillez vous connecter avec le lien suivant  http://www.cellule260.com/  votre nouveau mot de passe est: '.$mdp
         ];
     
         Mail::to($member->email)->send(new \App\Mail\MailCreation($details));

@@ -30,7 +30,7 @@
                         @endif
 
                      
-                    <div class="card" style="width: 80rem;"  class="shadow-lg p-3 mb-5 bg-white">
+                    <div class="card" style=""  class="shadow-lg p-3 mb-5 bg-white">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">

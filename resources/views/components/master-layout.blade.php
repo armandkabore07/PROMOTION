@@ -16,18 +16,19 @@
 </head>
   <body >
 
-    
-    <nav class="navbar  fixed-top" id="menu">  
-        <!--<a  class="fa fa-fw fa-calendar-alt "  > {{ date('d/m/y')  }} <br> {{ date('G:i') }}</a> -->
+    <!-- old nav -->
+      <!--   <nav class="navbar  fixed-top" id="menu">  
+        
         <a  href="{{route('home')}} "  class="nav-link  @if(Request::segment(1) == '') active @endif "><i class="fa fa-fw fa-home"></i> Acceuil</a>
         <a href="{{route('informations.index')}} "  class="nav-link @if(Request::segment(1) == 'informations') active @endif"><i class="fa fa-fw fa-book"></i> Publications</a> 
         <a href="{{route('mesCotisations.show',Auth::user()->id)}} "  class="nav-link @if(Request::segment(1) == 'mesCotisations') active @endif"><i class="fa fa-fw fa-money"></i>Mes Cotisations</a>
 
         @role('admin')
         <a href="{{route('membres.index') }}" class="nav @if(Request::segment(1) == 'membres') active @endif"> <i class="fa fa-fw fa-user"></i> Membres</a>
+        @endrole
         <a href="{{route('adhesions.index')}}" class="nav-link @if(Request::segment(1) == 'adhesions') active @endif"><i class="fa fa-fw fa-user"  class="nav @if(Request::segment(1) == 'adhesions') active @endif"></i> Adhesions</a>
+        @role('admin')
         <a href="{{route('cotisations.index')}} "  class="nav-link @if(Request::segment(1) == 'cotisations') active @endif"><i class="fa fa-fw fa-envelope"></i> Cotisations</a> 
-        
         @endrole
         <a href="#"><i class="fa fa-fw fa-user-plus"  class="nav"></i> Contact</a>
         <a href="#"><i class="fa fa-fw fa-search"></i> Recherche</a>
@@ -89,11 +90,104 @@
             <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
         </div>
         </a> --}} 
-     </nav> 
+     </nav>  -->
+      
+     <!-- new nav -->
+
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="menu">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a  href="{{route('home')}} "  class="nav-link  @if(Request::segment(1) == '') active @endif "><i class="fa fa-fw fa-home"></i> Acceuil</a>
+            </li>
+            <li class="nav-item">
+            <a href="{{route('informations.index')}} "  class="nav-link @if(Request::segment(1) == 'informations') active @endif"><i class="fa fa-fw fa-book"></i> Publications</a> 
+            </li>
+            <li class="nav-item">
+            <a href="{{route('mesCotisations.show',Auth::user()->id)}} "  class="nav-link @if(Request::segment(1) == 'mesCotisations') active @endif"><i class="fa fa-fw fa-money"></i>Mes Cotisations</a>
+            </li>
+            @role('admin')
+            <li class="nav-item">
+              <a href="{{route('membres.index') }}" class="nav-link @if(Request::segment(1) == 'membres') active @endif"> <i class="fa fa-fw fa-user"></i> Membres</a>
+            </li>
+            @endrole
+            <li class="nav-item">
+            <a href="{{route('adhesions.index')}}" class="nav-link @if(Request::segment(1) == 'adhesions') active @endif"><i class="fa fa-fw fa-user"  class="nav @if(Request::segment(1) == 'adhesions') active @endif"></i> Adhesions</a>
+            </li>
+            @role('admin')
+            <li class="nav-item">
+            <a href="{{route('cotisations.index')}} "  class="nav-link @if(Request::segment(1) == 'cotisations') active @endif"><i class="fa fa-fw fa-envelope"></i> Cotisations</a>
+            </li>
+            @endrole
+            <li class="nav-item">
+            <a href="#" class="nav-link"><i class="fa fa-fw fa-user-plus"  class="nav"></i> Contact</a>
+            </li>
+            <li class="nav-item">
+            <a href="#" class="nav-link"><i class="fa fa-fw fa-search"></i> Recherche</a>
+            </li>
+
+            
+            </li>
+
+           
+
+            <li class="nav-item">
+             
+
+            <div class="nav-item dropdown" id="dropdown">
+            <a class="nav-link dropdown-toggle" href="" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-fw fa-user"></i>{{Auth::user()->nom}}  {{Auth::user()->prenom}}
+
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" >
+              
+              <li><a class="dropdown-item @if(Request::segment(1) == 'moncompte') active @endif" href="{{route('moncompte.show', Auth::user()->id) }} " ><i class="fa fa-fw fa-user"></i>Mon profil</a></li>
+              <li><a class="dropdown-item @if(Request::segment(1) == 'mdp') active @endif" href="{{route('mdp.edit', Auth::user()->id) }}"><i class="fa fa-fw fa-edit"></i>Changer MDP</a></li>
+              @role('admin')
+              <li><a href="{{route('parametres.index')}} " class="nav-link @if(Request::segment(1) == 'parametres') active @endif"><i class="fa fa-fw fa-wrench"></i> Parametres</a></li>
+              @endrole
+              <li><hr class="dropdown-divider "></li>
+              <li>
+              <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();"> 
+                      {{--    <i class="fa fa-fw fa-sign-out"></i> --}}
+                          {{ __('Deconnexion') }}
+                    </x-responsive-nav-link>
+                </form> 
+              </li>
+            </ul>
+          </div>
 
 
-    
 
+
+          <li><a href="#" class="nav-link @if(Request::segment(1) == 'logout') active @endif">
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <div :href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                                <i class="fa fa-fw fa-sign-out"></i>
+                {{ __('Deconnexion') }}
+      </div>
+        </form>
+        </a> </li>
+
+
+
+          </ul>
+
+        </div>
+
+      </nav>
+
+      <!-- End new nav -->
     <main id="contentbody">
        <div style="height: 100%; ">
         {{ $slot }}
